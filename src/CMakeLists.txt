@@ -7,9 +7,7 @@ set(ALL_SRCS
 
 add_executable(my_program ${ALL_SRCS})
 
-target_include_directories(my_program PUBLIC ${PROJECT_SOURCE_DIR}/include)
-
-# 链接构建好的动态库
+# 链接编译好的动态库
 target_link_libraries(my_program PUBLIC utils)
 
 # MSVC UTF-8 支持

@@ -8,6 +8,8 @@ add_library(utils SHARED
 
 target_include_directories(utils PUBLIC ${PROJECT_SOURCE_DIR}/include)
 
-# 可以继续往后补充......
+if(MSVC)
+  set_target_properties(utils PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS ON)
+endif()
 
 message("\n--------------------------------------------")
