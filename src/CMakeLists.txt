@@ -1,18 +1,15 @@
-# for all "src/x.cpp", generate target "x"
-message("CMakeLists.txt for src directory")
+# src/CMakeLists.txt
+set(TARGET ${PROJECT_NAME}-${CMAKE_SYSTEM_NAME})
 
-set(ALL_SRCS
-  main.cpp
+# utils 模块：编译为静态库
+add_library(utils STATIC
+  utils/impl/utils.cpp
+)
+target_include_directories(utils
+  PUBLIC  utils/include
+  PRIVATE utils/impl
 )
 
-add_executable(my_program ${ALL_SRCS})
-
-# 链接编译好的动态库
-target_link_libraries(my_program PUBLIC utils)
-
-# MSVC UTF-8 支持
-if(MSVC)
-  target_compile_options(my_program PRIVATE /utf-8)
-endif()
-
-message("\n--------------------------------------------")
+# 主可执行文件
+add_executable(${TARGET} main.cpp)
+target_link_libraries(${TARGET} PRIVATE utils)

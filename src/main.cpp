@@ -11,8 +11,7 @@ using namespace std;
 
 TelephoneDirect direct;
 
-vector<string> paths = {"./data/5000.txt", "./data/10000.txt",
-                        "./data/100000.txt"};
+vector<string> paths = {"./data/5000.txt", "./data/10000.txt", "./data/100000.txt"};
 
 void loadCharMap();
 
@@ -51,13 +50,9 @@ int main(int argc, char **argv) {
 
 struct helper {
   static std::vector<std::string> groups;
-  static std::map<std::string,
-                  std::function<void(TelephoneItem &, const std::string &)>>
-      setters;
-  static function<bool(const std::string &k1, const std::string &k2)>
-      contain_ptr;
-  static function<bool(const std::string &k1, const std::string &k2)>
-      name_contain_ptr;
+  static std::map<std::string, std::function<void(TelephoneItem &, const std::string &)>> setters;
+  static function<bool(const std::string &k1, const std::string &k2)> contain_ptr;
+  static function<bool(const std::string &k1, const std::string &k2)> name_contain_ptr;
   static std::map<std::string, std::string> chars_map;
 };
 
@@ -68,8 +63,7 @@ cmp_ptr helper::contain_ptr = [](const std::string &k1, const std::string &k2) {
   return k1.find(k2) != std::string::npos;
 };
 
-cmp_ptr helper::name_contain_ptr = [](const std::string &k1,
-                                      const std::string &k2) {
+cmp_ptr helper::name_contain_ptr = [](const std::string &k1, const std::string &k2) {
   bool cmp1 = (k1.find(k2) != std::string::npos);
   string k1pinyin, k1jianpin, k2pinyin, k2jianpin;
   for (size_t i = 0; i < k1.size(); i += 2) {
@@ -201,8 +195,8 @@ void AddTelephoneItem() {
   cout << "请输入用户信息，请按照括号内的方式写入\n"
        << "(姓名 城市 手机号码 住宅电话号码 办公电话号码 电子邮件 公司 地址 "
           "添加时间)";
-  cin >> item.name >> item.city >> item.phone >> item.hphone >> item.ophone >>
-      item.email >> item.company >> item.address;
+  cin >> item.name >> item.city >> item.phone >> item.hphone >> item.ophone >> item.email >> item.company >>
+      item.address;
   getline(std::cin, item.add_time);
   cout << "是否需要添加备注和群组(Y或者N)";
   char choice;
@@ -225,26 +219,16 @@ void DelTelephoneItem() {
   }
 }
 
-std::map<std::string, std::function<void(TelephoneItem &, const std::string &)>>
-    helper::setters = {
-        {"name", [](TelephoneItem &item,
-                    const std::string &value) { item.name = value; }},
-        {"city", [](TelephoneItem &item,
-                    const std::string &value) { item.city = value; }},
-        {"phone", [](TelephoneItem &item,
-                     const std::string &value) { item.phone = value; }},
-        {"hphone", [](TelephoneItem &item,
-                      const std::string &value) { item.hphone = value; }},
-        {"email", [](TelephoneItem &item,
-                     const std::string &value) { item.email = value; }},
-        {"add_time", [](TelephoneItem &item,
-                        const std::string &value) { item.add_time = value; }},
-        {"ophone", [](TelephoneItem &item,
-                      const std::string &value) { item.ophone = value; }},
-        {"company", [](TelephoneItem &item,
-                       const std::string &value) { item.company = value; }},
-        {"address", [](TelephoneItem &item,
-                       const std::string &value) { item.address = value; }},
+std::map<std::string, std::function<void(TelephoneItem &, const std::string &)>> helper::setters = {
+    {"name", [](TelephoneItem &item, const std::string &value) { item.name = value; }},
+    {"city", [](TelephoneItem &item, const std::string &value) { item.city = value; }},
+    {"phone", [](TelephoneItem &item, const std::string &value) { item.phone = value; }},
+    {"hphone", [](TelephoneItem &item, const std::string &value) { item.hphone = value; }},
+    {"email", [](TelephoneItem &item, const std::string &value) { item.email = value; }},
+    {"add_time", [](TelephoneItem &item, const std::string &value) { item.add_time = value; }},
+    {"ophone", [](TelephoneItem &item, const std::string &value) { item.ophone = value; }},
+    {"company", [](TelephoneItem &item, const std::string &value) { item.company = value; }},
+    {"address", [](TelephoneItem &item, const std::string &value) { item.address = value; }},
 };
 
 #define EDIT_MAP(obj, value)         \
@@ -262,8 +246,15 @@ void EditTelephoneItem() {
     cout << "选择想要修改的用户信息: (1. 用户姓名 2. 城市 3. 手机号码 4. "
             "住宅电话 5. 办公电话 6. 电子邮件 7. 公司 8. 地址 9. 添加时间)";
     std::vector<std::string> choice_strs{
-        "name",  "city",    "phone",   "hphone",   "ophone",
-        "email", "company", "address", "add_time",
+        "name",
+        "city",
+        "phone",
+        "hphone",
+        "ophone",
+        "email",
+        "company",
+        "address",
+        "add_time",
     };
     cin >> choice;
     if (choice >= 1 && choice <= 9) {
@@ -297,10 +288,17 @@ void ExportTeleItems() {
   }
   char buff[2048];
   for (auto item : direct.teles) {
-    sprintf(buff, "%s %s %s %s %s %s", item.name.c_str(), item.city.c_str(),
-            item.phone.c_str(), item.hphone.c_str(), item.ophone.c_str(),
-            item.email.c_str(), item.company.c_str(), item.address.c_str(),
-            item.add_time.c_str());
+    sprintf(buff,
+        "%s %s %s %s %s %s",
+        item.name.c_str(),
+        item.city.c_str(),
+        item.phone.c_str(),
+        item.hphone.c_str(),
+        item.ophone.c_str(),
+        item.email.c_str(),
+        item.company.c_str(),
+        item.address.c_str(),
+        item.add_time.c_str());
     out_file.write(buff, sizeof(buff));
   }
 }
@@ -316,18 +314,15 @@ void AddGroupItem() {
 void DelGroupItem() {
   cout << "群组一共有: \n";
   for (int i = 0; i < helper::groups.size(); i++) {
-    cout << "群组编号为: " << i + 1 << " 群组名称: " << helper::groups[i]
-         << endl;
+    cout << "群组编号为: " << i + 1 << " 群组名称: " << helper::groups[i] << endl;
   }
   int choice;
   cout << "选择想要删除的编号: ";
   cin >> choice;
   if (choice >= 1 && choice <= helper::groups.size()) {
-    helper::groups.erase(
-        std::remove_if(helper::groups.begin(), helper::groups.end(),
-                       [&](const std::string &group) {
-                         return group == helper::groups[choice - 1];
-                       }),
+    helper::groups.erase(std::remove_if(helper::groups.begin(),
+                             helper::groups.end(),
+                             [&](const std::string &group) { return group == helper::groups[choice - 1]; }),
         helper::groups.end());
 
   } else {
@@ -339,8 +334,7 @@ void EditGroupItem() {
   cout << "群组一共有: \n";
   std::string name;
   for (int i = 0; i < helper::groups.size(); i++) {
-    cout << "群组编号为: " << i + 1 << " 群组名称: " << helper::groups[i]
-         << endl;
+    cout << "群组编号为: " << i + 1 << " 群组名称: " << helper::groups[i] << endl;
   }
   int choice;
   cout << "请输入想要编辑的群组编号: ";
@@ -407,8 +401,7 @@ void FindTelephoneItem() {
         break;
       }
       case 6: {
-        std::vector<TelephoneItem> homePhoneArr =
-            direct.findFuzzyHomePhone(key, helper::contain_ptr);
+        std::vector<TelephoneItem> homePhoneArr = direct.findFuzzyHomePhone(key, helper::contain_ptr);
         if (homePhoneArr.size())
           cout << homePhoneArr << endl;
         else
@@ -416,8 +409,7 @@ void FindTelephoneItem() {
         break;
       }
       case 7: {
-        auto officePhoneArr =
-            direct.findFuzzyOfficePhone(key, helper::contain_ptr);
+        auto officePhoneArr = direct.findFuzzyOfficePhone(key, helper::contain_ptr);
         if (officePhoneArr.size())
           cout << officePhoneArr << endl;
         else
